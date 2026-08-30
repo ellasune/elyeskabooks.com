@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elyeska Kitapları | Kostyev Sarmalı</title>
+    <title>Elyeska Kitapları | Panthea Serisi</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -20,7 +20,6 @@
             position: relative;
         }
 
-        /* Kar Efekti Tuvali */
         #snow-canvas {
             position: fixed;
             top: 0;
@@ -31,7 +30,6 @@
             z-index: 99;
         }
 
-        /* HERO ALANI */
         .hero-section {
             min-height: 100vh;
             background: linear-gradient(rgba(7, 10, 14, 0.7), rgba(7, 10, 14, 0.9)),
@@ -127,10 +125,9 @@
             font-family: 'Cinzel', serif;
         }
 
-        /* ORTAK BÖLÜM STİLLERİ */
         section {
-            padding: 6rem 1.5rem;
-            max-width: 1100px;
+            padding: 5rem 1.5rem;
+            max-width: 1200px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -152,48 +149,60 @@
             font-style: italic;
         }
 
-        /* KİTAP KARTI */
+        .books-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+        @media (min-width: 900px) {
+            .books-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         .featured-book {
             background: rgba(14, 19, 27, 0.85);
             border: 1px solid rgba(223, 183, 108, 0.3);
-            border-radius: 4px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-            padding: 2.5rem;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        @media (min-width: 768px) {
-            .featured-book {
-                grid-template-columns: 340px 1fr;
-                gap: 3rem;
-            }
+        .featured-book:hover {
+            transform: translateY(-5px);
+            border-color: rgba(223, 183, 108, 0.6);
         }
+
         .book-cover {
             border: 1px solid rgba(223, 183, 108, 0.4);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
             border-radius: 4px;
             overflow: hidden;
             background: #0f141c;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%;
+            max-width: 260px;
+            height: 370px;
+            margin: 0 auto 1.5rem auto;
         }
         .book-cover img {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
             object-fit: cover;
+            display: block;
         }
+
         .book-details {
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
             justify-content: space-between;
         }
         .series-tag {
             font-family: 'Cinzel', serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             color: #dfb76c;
             text-transform: uppercase;
@@ -202,50 +211,78 @@
         }
         .book-main-title {
             font-family: 'Cinzel', serif;
-            font-size: clamp(2rem, 4vw, 2.7rem);
-            letter-spacing: 4px;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
             color: #f7f9fa;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .quote-box {
             font-style: italic;
             color: #e2c08d;
             border-left: 2px solid #dfb76c;
-            padding-left: 15px;
-            margin-bottom: 1.5rem;
-            font-size: 1.15rem;
+            padding-left: 12px;
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
             line-height: 1.5;
         }
         .synopsis {
-            font-size: 1.15rem;
-            line-height: 1.8;
+            font-size: 1.05rem;
+            line-height: 1.7;
             color: #bac4ce;
             margin-bottom: 1.5rem;
+            flex-grow: 1;
         }
         .synopsis p {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
-        <p><a href="bolum-0.html">Sıfır: Sevgili Rodya</a></p>
 
-        .btn-action {
-            display: inline-block;
-            padding: 12px 28px;
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .btn-pdf {
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            padding: 11px 16px;
+            background-color: #800020;
+            color: #ffffff;
             text-decoration: none;
-            background: #dfb76c;
-            color: #080b10;
+            border-radius: 4px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border: 1px solid #800020;
+            transition: all 0.3s ease;
+        }
+        .btn-pdf:hover {
+            background-color: #990026;
+            box-shadow: 0 0 15px rgba(128, 0, 32, 0.6);
+        }
+        .btn-action {
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            padding: 11px 16px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            background: transparent;
+            color: #dfb76c;
             border: 1px solid #dfb76c;
+            border-radius: 4px;
             transition: all 0.3s ease;
         }
         .btn-action:hover {
-            background: transparent;
-            color: #dfb76c;
+            background: #dfb76c;
+            color: #080b10;
             box-shadow: 0 0 15px rgba(223, 183, 108, 0.4);
         }
 
-        /* YAZAR & İLETİŞİM */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -317,10 +354,8 @@
 </head>
 <body>
 
-    <!-- Kar Taneleri Tuvali -->
     <canvas id="snow-canvas"></canvas>
 
-    <!-- HERO ALANI -->
     <div class="hero-section">
         <header>
             <nav>
@@ -342,55 +377,86 @@
         </div>
     </div>
 
-    <!-- KİTAPLIK BÖLÜMÜ -->
     <section id="kutuphane">
         <div class="section-header">
             <div class="ornament">🗝 ❖ 🗝</div>
             <h2>KÜTÜPHANE</h2>
-            <p>Panthea ve Petrovich Mirası Serisi • 1. Kitap</p>
+            <p>Panthea ve Petrovich Mirası Serisi</p>
         </div>
 
-        <article class="featured-book">
-            <div class="book-cover">
-                <!-- GitHub'a yüklediğin kapak resmi -->
-                <img src="kapak.png" alt="Kostyev Sarmalı Kitap Kapağı">
-            </div>
+        <div class="books-grid">
 
-            <div class="book-details">
-                <div>
-                    <span class="series-tag">Panthea ve Petrovich Mirası • Romeo ve Juliet Retelling</span>
-                    <h3 class="book-main-title">KOSTYEV SARMALI</h3>
-                    
-                    <div class="quote-box">
-                        “Bizden birini sevmek bir idam cezası ve sen o sehpaya çıkmak için çok heveslisin.”
-                    </div>
-
-                    <div class="synopsis">
-                        <p>
-                            Rusya'nın, Romanov ailesine soyu dayanan en asil ailelerinden Petrovich'lerin son oğlu bir suikasta kurban gider. Yakov Petrovich'ten 20 sene sonra Panthea isimli uluslararası organizasyon bölünmüş, formül Cosa Nostra'nın eline geçmiştir.
-                        </p>
-                        <p>
-                            Her şeyin bittiğini sandıkları yerde, Petrovich'leri bir zehrin bu kadar kolay öldüremeyeceğini anlayacaklardır. Çünkü Petrovich'ler zehri gözlerinde ve yüreğinde taşır. Yakov aslında son Petrovich değildir ve Rodeon Kostyev ailesinin mirasını devam ettirecektir.
-                        </p>
-                        <p style="font-style: italic; color: #dfb76c;">
-                            “Kimseye söylemediğin günahlarını ve herkesten sakladığın armağanlarını. Küçük kuğu, uçmayı öğrendiğinde geleceğin ilk yer benim kollarım olacak.”
-                        </p>
-                    </div>
+            <article class="featured-book">
+                <div class="book-cover">
+                    <img src="kapak.png" alt="Kostyev Sarmalı Kitap Kapağı">
                 </div>
 
-                <div> <div style="margin-top: 25px; margin-bottom: 30px;">
-    <a href="bolum-giris.html" style="display: inline-block; padding: 12px 24px; background-color: #2c3e50; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 15px; letter-spacing: 0.5px;">
-        📖 Sıfır: Sevgili Rodya — Bölümü Oku
-    </a>
-</div>
+                <div class="book-details">
+                    <div>
+                        <span class="series-tag">Panthea ve Petrovich Mirası • 1. Kitap</span>
+                        <h3 class="book-main-title">KOSTYEV SARMALI</h3>
+                        
+                        <div class="quote-box">
+                            “Bizden birini sevmek bir idam cezası ve sen o sehpaya çıkmak için çok heveslisin.”
+                        </div>
 
-                    <a href="https://www.wattpad.com/user/elyeska" target="_blank" class="btn-action">Wattpad'de Oku</a>
+                        <div class="synopsis">
+                            <p>
+                                Rusya'nın, Romanov ailesine soyu dayanan en asil ailelerinden Petrovich'lerin son oğlu bir suikasta kurban gider. Yakov Petrovich'ten 20 sene sonra Panthea isimli uluslararası organizasyon bölünmüş, formül Cosa Nostra'nın eline geçmiştir.
+                            </p>
+                            <p>
+                                Her şeyin bittiğini sandıkları yerde, Petrovich'leri bir zehrin bu kadar kolay öldüremeyeceğini anlayacaklardır. Çünkü Petrovich'ler zehri gözlerinde ve yüreğinde taşır.
+                            </p>
+                            <p style="font-style: italic; color: #dfb76c;">
+                                “Kimseye söylemediğin günahlarını ve herkesten sakladığın armağanlarını. Küçük kuğu, uçmayı öğrendiğinde geleceğin ilk yer benim kollarım olacak.”
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="kitap-1.pdf" target="_blank" class="btn-pdf">📖 Kitabı Oku (PDF)</a>
+                        <a href="https://www.wattpad.com/user/elyeska" target="_blank" class="btn-action">Wattpad</a>
+                    </div>
                 </div>
-            </div>
-        </article>
+            </article>
+
+            <article class="featured-book">
+                <div class="book-cover">
+                    <img src="kapak-2.png" alt="Lazarus Denklemi Kitap Kapağı">
+                </div>
+
+                <div class="book-details">
+                    <div>
+                        <span class="series-tag">Panthea ve Petrovich Mirası • 2. Kitap</span>
+                        <h3 class="book-main-title">LAZARUS DENKLEMİ</h3>
+                        
+                        <div class="quote-box">
+                            “Anya tek bir kelime fısıldar: 'Kabil nişanı.' Ve Damien Vadianov, onu sonsuza kadar kendisine alır.”
+                        </div>
+
+                        <div class="synopsis">
+                            <p>
+                                Sanki dünyanın sonuymuşçasına kar yağıyordu, ya da zaten dünyanın sonuydu. Babam, dünyanın sonu ile başının aynı olduğunu söylermiş. Başladığı yere geri dönermiş insan hep, geçmişinin hayaletinden kaçamazmış.
+                            </p>
+                            <p>
+                                Anya Petrovna, Rusya'nın son kraliyet ailesinin soyundan gelen genç bir kadındır ve isteği dışı evlendirileceğini öğrendiği gün seneler önce ona verilmiş bir sözü hatırlar.
+                            </p>
+                            <p>
+                                Sözün sahibi artık içlerindeki en güçlü adamdır ve kızın ona borçlu kalmasını dileyerek kurguladığı plan, sonunda ona istediğini getirecektir.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="kitap-2.pdf" target="_blank" class="btn-pdf">📖 Kitabı Oku (PDF)</a>
+                        <a href="https://www.wattpad.com/user/elyeska" target="_blank" class="btn-action">Wattpad</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
     </section>
 
-    <!-- YAZAR & İLETİŞİM BÖLÜMÜ -->
     <section id="yazar">
         <div class="info-grid">
             <div class="info-card">
@@ -431,7 +497,6 @@
         &copy; 2026 Elyeska. Tüm hakları saklıdır.
     </footer>
 
-    <!-- Kar Yağışı Animasyon Scripti -->
     <script>
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
