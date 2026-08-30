@@ -3,27 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elyeska Kitapları</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <title>Elyeska Kitapları | Kostyev Sarmalı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
         body {
-            min-height: 100vh;
-            background: linear-gradient(rgba(10, 14, 20, 0.65), rgba(8, 12, 16, 0.8)),
-                        url('https://images.unsplash.com/photo-1548625361-16eb14fa3f44?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            background-color: #070a0e;
             color: #e6edf3;
             font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Kar Efekti Tuvali */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        /* HERO ALANI */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(rgba(7, 10, 14, 0.7), rgba(7, 10, 14, 0.9)),
+                        url('https://images.unsplash.com/photo-1548625361-16eb14fa3f44?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
             text-align: center;
-            overflow-x: hidden;
             position: relative;
+            z-index: 2;
         }
         header {
             padding: 2.5rem 1rem 1rem;
@@ -35,7 +54,7 @@
         nav a {
             color: #c4d1db;
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 12px;
             font-family: 'Cinzel', serif;
             font-size: 0.85rem;
             transition: color 0.3s, text-shadow 0.3s;
@@ -44,7 +63,7 @@
             color: #dfb76c;
             text-shadow: 0 0 10px rgba(223, 183, 108, 0.5);
         }
-        .hero {
+        .hero-content {
             max-width: 850px;
             padding: 2rem 20px;
             display: flex;
@@ -58,17 +77,17 @@
             letter-spacing: 5px;
             opacity: 0.85;
         }
-        .hero h1 {
+        .hero-content h1 {
             font-family: 'Cinzel', serif;
-            font-size: clamp(2.5rem, 6vw, 4.2rem);
+            font-size: clamp(2.3rem, 5.5vw, 4rem);
             letter-spacing: 8px;
             color: #f7f9fa;
             text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9), 0 0 15px rgba(223, 183, 108, 0.3);
             margin-bottom: 1.2rem;
             text-transform: uppercase;
         }
-        .hero p {
-            font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+        .hero-content p {
+            font-size: clamp(1.2rem, 3.5vw, 1.6rem);
             font-style: italic;
             color: #d1d9e0;
             line-height: 1.6;
@@ -77,7 +96,7 @@
             border-top: 1px solid rgba(223, 183, 108, 0.3);
             border-bottom: 1px solid rgba(223, 183, 108, 0.3);
             padding: 15px 25px;
-            background: rgba(10, 14, 20, 0.35);
+            background: rgba(10, 14, 20, 0.4);
             backdrop-filter: blur(4px);
         }
         .btn-enter {
@@ -92,41 +111,370 @@
             background: rgba(10, 15, 22, 0.6);
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         .btn-enter:hover {
             background: #dfb76c;
-            color: #0b0f14;
+            color: #070a0e;
             box-shadow: 0 0 25px rgba(223, 183, 108, 0.6);
             transform: translateY(-2px);
         }
-        footer {
-            padding: 2rem 1rem;
-            font-size: 0.85rem;
+        .scroll-indicator {
+            padding-bottom: 2rem;
             color: #8b949e;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* ORTAK BÖLÜM STİLLERİ */
+        section {
+            padding: 6rem 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        .section-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.3rem;
+            letter-spacing: 6px;
+            color: #dfb76c;
+            margin-bottom: 0.5rem;
+        }
+        .section-header p {
+            font-size: 1.2rem;
+            color: #8b949e;
+            font-style: italic;
+        }
+
+        /* KİTAP KARTI */
+        .featured-book {
+            background: rgba(14, 19, 27, 0.85);
+            border: 1px solid rgba(223, 183, 108, 0.3);
+            border-radius: 4px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        @media (min-width: 768px) {
+            .featured-book {
+                grid-template-columns: 340px 1fr;
+                gap: 3rem;
+            }
+        }
+        .book-cover {
+            border: 1px solid rgba(223, 183, 108, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+            border-radius: 4px;
+            overflow: hidden;
+            background: #0f141c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .book-cover img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .book-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .series-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #dfb76c;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .book-main-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 4vw, 2.7rem);
+            letter-spacing: 4px;
+            color: #f7f9fa;
+            margin-bottom: 1rem;
+        }
+        .quote-box {
+            font-style: italic;
+            color: #e2c08d;
+            border-left: 2px solid #dfb76c;
+            padding-left: 15px;
+            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            line-height: 1.5;
+        }
+        .synopsis {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #bac4ce;
+            margin-bottom: 1.5rem;
+        }
+        .synopsis p {
+            margin-bottom: 1rem;
+        }
+        .btn-action {
+            display: inline-block;
+            padding: 12px 28px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-decoration: none;
+            background: #dfb76c;
+            color: #080b10;
+            border: 1px solid #dfb76c;
+            transition: all 0.3s ease;
+        }
+        .btn-action:hover {
+            background: transparent;
+            color: #dfb76c;
+            box-shadow: 0 0 15px rgba(223, 183, 108, 0.4);
+        }
+
+        /* YAZAR & İLETİŞİM */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        @media (min-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .info-card {
+            background: rgba(14, 19, 27, 0.8);
+            border: 1px solid rgba(223, 183, 108, 0.25);
+            padding: 2.5rem;
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+        .info-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            color: #dfb76c;
+            margin-bottom: 1.2rem;
+        }
+        .info-card p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #bac4ce;
+        }
+        .social-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(223, 183, 108, 0.2);
+            color: #e6edf3;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            border-color: #dfb76c;
+            background: rgba(223, 183, 108, 0.1);
+            transform: translateX(5px);
+        }
+
+        footer {
+            padding: 3rem 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6e7681;
             letter-spacing: 1px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 2;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="#kutuphane">Kütüphane</a>
-            <a href="#dunya">Evren</a>
-            <a href="#hakkinda">Yazar</a>
-            <a href="#mektuplar">İletişim</a>
-        </nav>
-    </header>
 
-    <main class="hero">
-        <div class="ornament">❖ ❖ ❖</div>
-        <h1>ELYESKA KİTAPLARI</h1>
-        <p>“seni tüm kış boyunca seveceğim ve burada kışlar sonsuzdur.”</p>
-        <a href="#kutuphane" class="btn-enter">Kütüphaneye Adım At</a>
-    </main>
+    <!-- Kar Taneleri Tuvali -->
+    <canvas id="snow-canvas"></canvas>
+
+    <!-- HERO ALANI -->
+    <div class="hero-section">
+        <header>
+            <nav>
+                <a href="#kutuphane">Kütüphane</a>
+                <a href="#yazar">Yazar</a>
+                <a href="#iletisim">İletişim</a>
+            </nav>
+        </header>
+
+        <main class="hero-content">
+            <div class="ornament">❖ ❖ ❖</div>
+            <h1>ELYESKA KİTAPLARI</h1>
+            <p>“seni tüm kış boyunca seveceğim ve burada kışlar sonsuzdur.”</p>
+            <a href="#kutuphane" class="btn-enter">Kütüphaneye Adım At</a>
+        </main>
+
+        <div class="scroll-indicator">
+            ✦ Kaydırın ✦
+        </div>
+    </div>
+
+    <!-- KİTAPLIK BÖLÜMÜ -->
+    <section id="kutuphane">
+        <div class="section-header">
+            <div class="ornament">🗝 ❖ 🗝</div>
+            <h2>KÜTÜPHANE</h2>
+            <p>Panthea ve Petrovich Mirası Serisi • 1. Kitap</p>
+        </div>
+
+        <article class="featured-book">
+            <div class="book-cover">
+                <!-- GitHub'a yüklediğin kapak resmi -->
+                <img src="kapak.png" alt="Kostyev Sarmalı Kitap Kapağı">
+            </div>
+
+            <div class="book-details">
+                <div>
+                    <span class="series-tag">Panthea ve Petrovich Mirası • Romeo ve Juliet Retelling</span>
+                    <h3 class="book-main-title">KOSTYEV SARMALI</h3>
+                    
+                    <div class="quote-box">
+                        “Bizden birini sevmek bir idam cezası ve sen o sehpaya çıkmak için çok heveslisin.”
+                    </div>
+
+                    <div class="synopsis">
+                        <p>
+                            Rusya'nın, Romanov ailesine soyu dayanan en asil ailelerinden Petrovich'lerin son oğlu bir suikasta kurban gider. Yakov Petrovich'ten 20 sene sonra Panthea isimli uluslararası organizasyon bölünmüş, formül Cosa Nostra'nın eline geçmiştir.
+                        </p>
+                        <p>
+                            Her şeyin bittiğini sandıkları yerde, Petrovich'leri bir zehrin bu kadar kolay öldüremeyeceğini anlayacaklardır. Çünkü Petrovich'ler zehri gözlerinde ve yüreğinde taşır. Yakov aslında son Petrovich değildir ve Rodeon Kostyev ailesinin mirasını devam ettirecektir.
+                        </p>
+                        <p style="font-style: italic; color: #dfb76c;">
+                            “Kimseye söylemediğin günahlarını ve herkesten sakladığın armağanlarını. Küçük kuğu, uçmayı öğrendiğinde geleceğin ilk yer benim kollarım olacak.”
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="https://www.wattpad.com/user/elyeska" target="_blank" class="btn-action">Wattpad'de Oku</a>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- YAZAR & İLETİŞİM BÖLÜMÜ -->
+    <section id="yazar">
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>YAZAR HAKKINDA</h3>
+                <p>
+                    <strong>Ella Sune</strong>, 23 yaşındadır. Fransızca eğitimi almakta olup karanlık kurgu, Rus/Romanov estetiği ve gotik temalar içeren eserlerini <em>Elyeska</em> mahlasıyla kaleme almaktadır.
+                </p>
+            </div>
+
+            <div class="info-card" id="iletisim">
+                <h3>MÜHÜRLÜ MEKTUPLAR</h3>
+                <p style="margin-bottom: 1rem;">Hikâyeler, güncellemeler ve iletişim için:</p>
+                <ul class="social-links">
+                    <li>
+                        <a href="https://www.wattpad.com/user/elyeska" target="_blank">
+                            <span>Wattpad</span>
+                            <span>@elyeska ↗</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com/ghostromanovs" target="_blank">
+                            <span>Instagram</span>
+                            <span>@ghostromanovs ↗</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/ghostromanovs" target="_blank">
+                            <span>Twitter / X</span>
+                            <span>@ghostromanovs ↗</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        &copy; Elyeska. Tüm hakları saklıdır.
+        &copy; 2026 Elyeska. Tüm hakları saklıdır.
     </footer>
+
+    <!-- Kar Yağışı Animasyon Scripti -->
+    <script>
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const numFlakes = 75;
+        const flakes = [];
+
+        for (let i = 0; i < numFlakes; i++) {
+            flakes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2.2 + 0.6,
+                speedY: Math.random() * 1.0 + 0.4,
+                speedX: Math.random() * 0.4 - 0.2,
+                opacity: Math.random() * 0.7 + 0.3
+            });
+        }
+
+        function renderSnow() {
+            ctx.clearRect(0, 0, width, height);
+
+            flakes.forEach(flake => {
+                ctx.beginPath();
+                ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+                ctx.fill();
+
+                flake.y += flake.speedY;
+                flake.x += flake.speedX;
+
+                if (flake.y > height) {
+                    flake.y = -5;
+                    flake.x = Math.random() * width;
+                }
+                if (flake.x > width) flake.x = 0;
+                else if (flake.x < 0) flake.x = width;
+            });
+
+            requestAnimationFrame(renderSnow);
+        }
+
+        renderSnow();
+    </script>
 </body>
 </html>
